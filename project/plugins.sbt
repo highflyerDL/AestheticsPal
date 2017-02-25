@@ -3,3 +3,5 @@ libraryDependencies ++= Seq(
 )
 
 addSbtPlugin("org.scalikejdbc" %% "scalikejdbc-mapper-generator" % "2.5.0")
+
+addSbtPlugin("io.spray" % "sbt-revolver" % "0.8.0")

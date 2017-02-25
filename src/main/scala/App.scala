@@ -41,54 +41,68 @@ object WebServer {
     }
 
     class ExerciseService extends Directives with JsonSupport {
-      val route =
-        path("exercise") {
+      def assets = {
+        def redirectSingleSlash = pathSingleSlash {
           get {
-            complete(Exercise.getAll())
-          }
-        } ~
-        pathPrefix("exercise" / IntNumber) { categoryId =>
-          get {
-            complete(Exercise.getByCategory(categoryId))
-          }
-        } ~
-        path("programexercise") {
-          get {
-            parameter('id.as[Int].*) { listOfIds =>
-              complete(Exercise.getByIds(listOfIds.toList))
-            }
-          }
-        } ~
-        path("program") {
-          get {
-            complete(Program.getAll())
-          }
-          post {
-            entity(as[ProgramPOST]) { program =>
-              Program.create(program.name, program.description, program.exercises) match {
-                case program: Program => complete("Program created")
-                case _ => complete(StatusCodes.NotAcceptable -> "Error creating program")
-              }
-            }
-          }
-        } ~
-        path("trainingresult") {
-          get {
-            complete(TrainingResult.getAll())
-          }
-          post {
-            entity(as[TrainingResultPOST]) { tr =>
-              TrainingResult.create(tr.pId, tr.eId, tr.repCount, tr.weight) match {
-                case tResult: TrainingResult=> complete("Result created")
-                case _ => complete(StatusCodes.NotAcceptable -> "Error creating result")
-              }
-            }
+            redirect("index.html", StatusCodes.PermanentRedirect)
           }
         }
-        pathPrefix("trainingresult" / IntNumber) { programId =>
-          get {
-            complete(TrainingResult.getByProgram(programId))
+        getFromResourceDirectory("webapp/www") ~ redirectSingleSlash
+      }
+      val route =
+        pathPrefix("api") {
+          path("exercise") {
+            get {
+              complete(Exercise.getAll())
+            }
+          } ~
+          pathPrefix("exercise" / IntNumber) { categoryId =>
+            get {
+              complete(Exercise.getByCategory(categoryId))
+            }
+          } ~
+          path("programexercise") {
+            get {
+              parameter('id.as[Int].*) { listOfIds =>
+                complete(Exercise.getByIds(listOfIds.toList))
+              }
+            }
+          } ~
+          path("program") {
+            get {
+              complete(Program.getAll())
+            }
+            post {
+              entity(as[ProgramPOST]) { program =>
+                Program.create(program.name, program.description, program.exercises) match {
+                  case program: Program => complete("Program created")
+                  case _ => complete(StatusCodes.NotAcceptable -> "Error creating program")
+                }
+              }
+            }
+          } ~
+          path("trainingresult") {
+            get {
+              complete(TrainingResult.getAll())
+            }
+            post {
+              entity(as[TrainingResultPOST]) { tr =>
+                TrainingResult.create(tr.pId, tr.eId, tr.repCount, tr.weight) match {
+                  case tResult: TrainingResult=> complete("Result created")
+                  case _ => complete(StatusCodes.NotAcceptable -> "Error creating result")
+                }
+              }
+            }
           }
+          pathPrefix("trainingresult" / IntNumber) { programId =>
+            get {
+              complete(TrainingResult.getByProgram(programId))
+            }
+          }
+      } ~
+        getFromResourceDirectory("webapp/www") ~
+        get {
+          getFromResource("webapp/www/index.html")
         }
     }
 

@@ -2,3 +2,5 @@ target/
 project/target
 *~
 .idea/
+src/main/resources/webapp/www/bundle.js
+src/main/resources/webapp/node_modules
