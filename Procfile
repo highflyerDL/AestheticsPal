@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/AestheticPal
+web: target/universal/stage/bin/aestheticpal
