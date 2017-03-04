@@ -50,25 +50,12 @@ class CreateProgram extends Component {
         super(props);
         this.state = {
             name: "",
-            description: "",
-            exercises: [],
-            selectedExercise: null,
-            selectedExerciseValue: "",
-            selectedExercises: []
+            description: ""
         };
         this.handleChange = this.handleChange.bind(this);
-        this.addExercise = this.addExercise.bind(this);
         this.submitProgram = this.submitProgram.bind(this);
     }
 
-    componentWillMount() {
-        callQueryParamsApi("/exercise", {})
-            .then((data)=>{
-                this.state.exercises = data;
-                this.setState(this.state);
-            })
-            .catch((err)=>console.log(err));
-    }
 
     handleChange(type, event, selectValue) {
         this.state[type] = event.target.value;
@@ -81,11 +68,9 @@ class CreateProgram extends Component {
     }
 
     submitProgram(){
-        let selectedExercises = this.state.selectedExercises.map(e=>e.eId);
         let body = {
             name: this.state.name,
             description: this.state.description,
-            exercises: selectedExercises
         }
         callJsonApi("/program", body, "POST").then((data)=>console.log(data));
     }
@@ -102,29 +87,6 @@ class CreateProgram extends Component {
                     hintText="Description"
                     onChange={(event)=>this.handleChange("description", event)}
                     />
-                <br/>
-                <Autocomplete
-                    value={this.state.selectedExerciseValue}
-                    items={this.state.exercises}
-                    getItemValue={(item) => item.name}
-                    shouldItemRender={matchStateToTerm}
-                    renderItem={(item, isHighlighted)=>(
-                        <div
-                            style={isHighlighted ? styles.highlightedItem : styles.item}
-                            key={item.eId}
-                            id={item.eId}
-                        >{item.name}</div>
-                    )}
-                    onSelect={(value, object) => {this.setState({selectedExerciseValue: value, selectedExercise: object})}}
-                    onChange={(event, value) => this.setState({selectedExerciseValue: value})}
-                    inputProps={{size:41}}
-                    menuStyle={styles.menuAutoComplete}
-                />
-                <div>List of exercises chosen: </div>
-                {this.state.selectedExercises.map(ex => 
-                    <div key={ex.eId}>{ex.name}</div>
-                )}
-                <RaisedButton label="Add exercise" style={styles.button} onTouchTap={this.addExercise}/>
                 <br/>
                 <RaisedButton label="Submit program" primary={true} style={styles.button} onTouchTap={this.submitProgram}/>
             </div>

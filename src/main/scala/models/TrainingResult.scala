@@ -29,8 +29,8 @@ object TrainingResult extends SQLSyntaxSupport[TrainingResult]{
   def getAll()(implicit session: DBSession = autoSession): List[TrainingResult] =
     sql"select * from training_result".map(rs => TrainingResult(rs)).list.apply()
 
-  def getByProgram(programId: Int)(implicit session: DBSession = autoSession): List[TrainingResult] =
-    sql"select * from training_result where p_id = ${programId}".map(rs => TrainingResult(rs)).list.apply()
+  def getByDay(tdId: Int)(implicit session: DBSession = autoSession): List[TrainingResult] =
+    sql"select * from training_result where td_id = ${tdId}".map(rs => TrainingResult(rs)).list.apply()
 
   def create(tdId: Int, eId: Int, repCount: Int, weight: Int)(implicit session: DBSession = autoSession): TrainingResult = {
     val now = DateTime.now()

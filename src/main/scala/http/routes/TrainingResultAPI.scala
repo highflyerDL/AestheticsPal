@@ -23,9 +23,9 @@ class TrainingResultAPI extends Directives with JsonSupport {
           }
         }
     } ~
-      path("trainingresult" / IntNumber) { programId =>
+      path("trainingresult" / IntNumber) { dayId =>
         get {
-          complete(TrainingResult.getByProgram(programId))
+          complete(TrainingResult.getByDay(dayId))
         }
       }
 }

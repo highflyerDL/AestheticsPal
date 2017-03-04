@@ -24,8 +24,10 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
   }
 
   implicit val exerciseFormat = jsonFormat7(Exercise.apply)
-  implicit val programFormat = jsonFormat4(Program.apply)
-  implicit val programPOSTFormat = jsonFormat3(ProgramPOST)
+  implicit val programFormat = jsonFormat3(Program.apply)
+  implicit val programPOSTFormat = jsonFormat2(ProgramPOST)
   implicit val trainingResultFormat = jsonFormat6(TrainingResult.apply)
   implicit val trainingResultPOSTFormat = jsonFormat4(TrainingResultPOST)
+  implicit val trainingDayFormat = jsonFormat4(TrainingDay.apply)
+  implicit val trainingDayPOSTFormat = jsonFormat3(TrainingDayPOST)
 }

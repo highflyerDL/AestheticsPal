@@ -3,8 +3,19 @@ import {callQueryParamsApi, callJsonApi} from "../util/callApi.js";
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import CreateTrainingDay from './CreateTrainingDay';
+import { Link }from 'react-router';
 
 let styles = {
+    paper: {
+        position: 'relative',
+        margin: 50,
+        textAlign: 'center',
+        display: 'inline-block',
+        padding: '40px 60px',
+        width: 150,
+        height: 150
+    },
     exercise: {
         display: 'inline-block',
         margin: '30px'
@@ -16,7 +27,7 @@ export default class Program extends Component {
         super(props);
         this.state = {
             program: null,
-            exercises: []
+            days: []
         };
         this.programId = props.params.id;
         this.handleChange = this.handleChange.bind(this);
@@ -24,16 +35,10 @@ export default class Program extends Component {
     }
 
     componentWillMount() {
-        callQueryParamsApi("/program/"+this.programId, {})
+        callQueryParamsApi("/trainingday/"+this.programId, {})
             .then((data)=>{
-                this.state.program = data;
-                var idList = data[0].exercises.map(eId => "id="+eId+"&");
-                idList = idList.toString().replace(/,/g, "")
-                callQueryParamsApi("/programexercise?" + idList, {})
-                    .then((data)=>{
-                        this.state.exercises = data;
-                        this.setState(this.state);
-                    })
+                this.state.days = data;
+                this.setState(this.state);
             })
     }    
 
@@ -55,23 +60,14 @@ export default class Program extends Component {
     render() {
         return (
             <div>
-                {this.state.exercises.map((e,index) =>
-                    <div key={e.eId} style={styles.exercise}>
-                        <b>{e.name}</b>
-                        <br/>
-                        <TextField
-                            hintText="Rep count"
-                            onChange={(event)=>this.handleChange("repCount", event, index)}
-                            />
-                        <br/>
-                        <TextField
-                            hintText="Weight"
-                            onChange={(event)=>this.handleChange("weight", event, index)}
-                            />
-                        <br/>
-                        <RaisedButton label="Add result" style={styles.button} onTouchTap={()=>this.addResult(index)}/>
-                    </div>
+                {this.state.days.map((d,index) =>
+                    <Link key={d.tdId} to={"/trainingday/"+d.tdId}>
+                        <Paper zDepth={2} style={styles.paper}>
+                            <div style={styles.name}>{d.name}</div>
+                        </Paper>  
+                    </Link>
                 )}
+                <CreateTrainingDay programId={this.programId}/>
             </div>
         )
     }

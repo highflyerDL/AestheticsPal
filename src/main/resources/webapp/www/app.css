@@ -28,3 +28,7 @@ body {
   margin: 10px;
   display:inline-block;
 }
+
+td, th {
+  border: 1px solid #dddddd;
+}

@@ -16,7 +16,7 @@ class ProgramAPI extends Directives with JsonSupport {
       } ~
         post {
           entity(as[ProgramPOST]) { program =>
-            Program.create(program.name, program.description, program.days) match {
+            Program.create(program.name, program.description) match {
               case program: Program => complete("""Program created""")
               case _ => complete(StatusCodes.NotAcceptable -> "Error creating program")
             }

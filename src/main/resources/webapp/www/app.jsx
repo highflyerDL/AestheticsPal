@@ -5,6 +5,9 @@ import Chart from "./components/Chart";
 import ProgramList from "./components/ProgramList";
 import Program from "./components/Program";
 import CreateProgram from "./components/CreateProgram";
+import TrainingDayList from "./components/TrainingDayList";
+import TrainingDay from "./components/TrainingDay";
+import CreateTrainingDay from "./components/CreateTrainingDay";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
@@ -17,6 +20,9 @@ class App extends Component {
             <Route path="/program/create" component={CreateProgram}/>
             <Route path="/program" component={ProgramList}/>
             <Route path="/program/:id" component={Program}/>
+            <Route path="/trainingday/create" component={CreateTrainingDay}/>
+            <Route path="/trainingday" component={TrainingDayList}/>
+            <Route path="/trainingday/:id" component={TrainingDay}/>
             <Route path='*' component={NotFound} />
           </Route>
         </Router>

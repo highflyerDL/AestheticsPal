@@ -26,29 +26,28 @@ let styles = {
     }
 }
 
-export default class ProgramList extends Component {
+export default class TrainingDayList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            programs: []
+            days: []
         };
     }
 
     componentWillMount() {
-        callQueryParamsApi("/program", {})
+        callQueryParamsApi("/trainingdays", {})
             .then((data)=>{
-                this.setState({programs: data});
+                this.setState({days: data});
             })
     }
 
     render() {
         return (
             <div>
-                {this.state.programs.map((program)=> 
-                    <Link key={program.pId} to={"/program/"+program.pId}>
-                        <Paper zDepth={2} style={styles.paper}>
-                            <div style={styles.name}>{program.name}</div>
-                            <div style={styles.desc}>{program.description}</div>
+                {this.state.days.map((day)=> 
+                    <Link to={"/trainingdays/"+day.pId}>
+                        <Paper key={day.tdId} zDepth={2} style={styles.paper}>
+                            <div style={styles.name}>{day.name}</div>
                         </Paper>  
                     </Link>
                 )}

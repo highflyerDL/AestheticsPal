@@ -1,4 +1,4 @@
-name := "basic-project"
+name := "AestheticPal"
 
 organization := "example"
 
@@ -28,6 +28,8 @@ initialCommands :=
   """
 
 scalikejdbcSettings
+
+enablePlugins(JavaAppPackaging)
 
 lazy val akkaHttpVersion = "10.0.3"
 lazy val scalikeJDBCVersion = "2.5.0"
