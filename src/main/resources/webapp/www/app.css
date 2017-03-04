@@ -19,3 +19,12 @@ body {
 #navbar a {
   text-decoration: none;
 }
+
+.container {
+  margin: 10px 0 0 10px;
+}
+
+.program-container {
+  margin: 10px;
+  display:inline-block;
+}

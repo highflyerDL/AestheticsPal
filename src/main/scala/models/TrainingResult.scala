@@ -8,20 +8,20 @@ import scalikejdbc._
   */
 
 case class TrainingResult (
-  trId: Int, pId: Int, eId: Int,
+  trId: Int, tdId: Int, eId: Int,
   trainedOn: DateTime,
   repCount: Int, weight: Int
 )
 
 case class TrainingResultPOST (
-  pId: Int, eId: Int,
+  tdId: Int, eId: Int,
   repCount: Int, weight: Int
 )
 
 object TrainingResult extends SQLSyntaxSupport[TrainingResult]{
   override val tableName = "training_result"
   def apply(rs: WrappedResultSet) = new TrainingResult(
-    rs.int("tr_id"), rs.int("p_id"), rs.int("e_id"),
+    rs.int("tr_id"), rs.int("td_id"), rs.int("e_id"),
     rs.jodaDateTime("trained_on"),
     rs.int("rep_count"), rs.int("weight")
   )
@@ -32,10 +32,10 @@ object TrainingResult extends SQLSyntaxSupport[TrainingResult]{
   def getByProgram(programId: Int)(implicit session: DBSession = autoSession): List[TrainingResult] =
     sql"select * from training_result where p_id = ${programId}".map(rs => TrainingResult(rs)).list.apply()
 
-  def create(pId: Int, eId: Int, repCount: Int, weight: Int)(implicit session: DBSession = autoSession): TrainingResult = {
+  def create(tdId: Int, eId: Int, repCount: Int, weight: Int)(implicit session: DBSession = autoSession): TrainingResult = {
     val now = DateTime.now()
-    val id = sql"""insert into training_result(p_id, e_id, trained_on, rep_count, weight) VALUES(${pId}, ${eId}, current_date, ${repCount}, ${})""".updateAndReturnGeneratedKey().apply()
+    val id = sql"""insert into training_result(td_id, e_id, trained_on, rep_count, weight) VALUES(${tdId}, ${eId}, current_date, ${repCount}, ${weight})""".updateAndReturnGeneratedKey().apply()
 
-    TrainingResult.apply(id.toInt, pId, eId, now, repCount, weight)
+    TrainingResult.apply(id.toInt, tdId, eId, now, repCount, weight)
   }
 }

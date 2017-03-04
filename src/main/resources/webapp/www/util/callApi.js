@@ -1,10 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
-const api_url = "https://wu7okcxesg.execute-api.eu-west-1.amazonaws.com/prod/temperature";
+const api_url = "http://localhost:8080/api";
 
 function callJsonApi(api, body, method = "get") {
     return fetch(api_url + api, {
-            headers: { 'content-type': 'application/json', 'x-api-key': "hackweekhackweekhackweek" },
+            headers: { 'content-type': 'application/json'},
             method,
             body: JSON.stringify(body)
         })
