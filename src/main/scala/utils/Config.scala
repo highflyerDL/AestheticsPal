@@ -7,6 +7,7 @@ import com.typesafe.config.ConfigFactory
   */
 trait Config {
   val env = if (System.getenv("SCALA_ENV") == null) "development" else "production"
+  val port = if (System.getenv("SCALA_ENV") == null) 8080 else 80
 
   private val config = ConfigFactory.load()
   private val envConfig = config.getConfig(env)
