@@ -7,3 +7,7 @@ addSbtPlugin("org.scalikejdbc" %% "scalikejdbc-mapper-generator" % "2.5.0")
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.8.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.3")
+
+addSbtPlugin("org.flywaydb" % "flyway-sbt" % "4.1.1")
+
+resolvers += "Flyway" at "https://flywaydb.org/repo"
