@@ -16,7 +16,7 @@ object WebServer extends Config {
 
     val httpService = new HttpAPI
 
-    val bindingFuture = Http().bindAndHandle(httpService.routes, "localhost", port)
+    val bindingFuture = Http().bindAndHandle(httpService.routes, "0.0.0.0", port)
 
 //    print("asd", env)
     if(env == "development"){
