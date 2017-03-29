@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
-const api_url = "http://ec2-35-157-211-142.eu-central-1.compute.amazonaws.com/";
-// const api_url = "http://localhost:8080/"
+const api_url = "http://ec2-35-157-211-142.eu-central-1.compute.amazonaws.com/api";
+// const api_url = "http://localhost:8080/api"
 
 function callJsonApi(api, body, method = "get") {
     return fetch(api_url + api, {
