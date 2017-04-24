@@ -23,9 +23,14 @@ class TrainingDayAPI extends Directives with JsonSupport{
           }
         }
     } ~
-      path("trainingday" / IntNumber) { dayId =>
+      path("trainingday" / "day" / IntNumber) { dayId =>
         get {
           complete(TrainingDay.getByDayId(dayId))
+        }
+      } ~
+      path("trainingday" / "program" / IntNumber) { programId =>
+        get {
+          complete(TrainingDay.getByProgramId(programId))
         }
       }
 }

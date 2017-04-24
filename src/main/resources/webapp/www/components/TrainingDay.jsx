@@ -28,7 +28,7 @@ export default class TrainingDay extends Component {
     }
 
     componentWillMount() {
-        callQueryParamsApi("/trainingday/"+this.dayId, {})
+        callQueryParamsApi("/trainingday/day/"+this.dayId, {})
             .then((data)=>{
                 this.state.day = data;
                 var idList = data[0].exercises.map(eId => "id="+eId+"&");

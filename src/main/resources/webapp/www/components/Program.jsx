@@ -35,7 +35,7 @@ export default class Program extends Component {
     }
 
     componentWillMount() {
-        callQueryParamsApi("/trainingday/"+this.programId, {})
+        callQueryParamsApi("/trainingday/program/"+this.programId, {})
             .then((data)=>{
                 this.state.days = data;
                 this.setState(this.state);
