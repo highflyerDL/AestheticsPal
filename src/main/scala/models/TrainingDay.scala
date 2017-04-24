@@ -29,8 +29,8 @@ object TrainingDay extends SQLSyntaxSupport[TrainingDay]{
   def getAll()(implicit session: DBSession = autoSession): List[TrainingDay] =
     sql"select * from training_day".map(rs => TrainingDay(rs)).list.apply()
 
-  def getByProgramId(programId: Int)(implicit session: DBSession = autoSession): List[TrainingDay] =
-    sql"select * from training_day where p_id = ${programId}".map(rs => TrainingDay(rs)).list.apply()
+  def getByDayId(dayId: Int)(implicit session: DBSession = autoSession): List[TrainingDay] =
+    sql"select * from training_day where td_id = ${dayId}".map(rs => TrainingDay(rs)).list.apply()
 
   def create(pId: Int, name: String, exercises: List[Int])(implicit session: DBSession = autoSession): TrainingDay = {
     val id = sql"""insert into training_day(p_id, name, exercises) VALUES(${pId}, ${name}, ARRAY[${exercises}])""".updateAndReturnGeneratedKey().apply()
